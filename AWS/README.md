@@ -1,4 +1,4 @@
-# AWS - Very first steps
+# AWS - Very First Steps
 
 ## Create Amazon account.
 
