@@ -24,7 +24,7 @@ resource "aws_key_pair" "foo3key" {
 }
 
 /*   The proof of the pudding
-aws ec2 describe-key-pairs --filters Name=key-name,Values=foo3key
+aws ec2 describe-key-pairs --filters Name=key-name,Values=foo3
 */
 
 
