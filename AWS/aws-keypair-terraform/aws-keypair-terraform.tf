@@ -19,7 +19,7 @@ cat foo3.pub
 */
 
 resource "aws_key_pair" "foo3key" {
-  key_name   = "foo3key"
+  key_name   = "foo3"
   public_key = ""
 }
 
