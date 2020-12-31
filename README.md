@@ -1,12 +1,11 @@
 # Azure For Trainers
-### 12. November 2020
+## Last Meetup: 21. Dezember 2020             
+[Summary](AWS/README.md)
 
-[Git Cheat Sheet](https://i.redd.it/8341g68g1v7y.png)
+<br>
+<br>
+<br>
 
-[Get Started with Visual Studio Code](https://code.visualstudio.com/learn)
+## Next Meetup: 
 
-[AWS re:Invent](https://reinvent.awsevents.com/)
-
-[Azure Learning Explorer](https://azurecharts.com/learning)
-
-[Quantum computing foundations - Microsoft Learn](https://docs.microsoft.com/en-us/learn/paths/quantum-computing-fundamentals/)
+[AWS CloudShell](https://docs.aws.amazon.com/cloudshell/latest/userguide/working-with-cloudshell.html)
