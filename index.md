@@ -1,6 +1,6 @@
 # AWS - Very First Steps
 
-## Create Amazon account.
+### Create Amazon account.
 
 This account is the *Root user*. You need an email address, telephone number, credit card. MFA is optional but highly recommended (e.g. Google authenticator).
 
@@ -11,7 +11,7 @@ Tipp: Keep the Root user account separate from your others Amazon account(s).
 
 
 
-## Explore the  Management Console.
+### Explore the  Management Console.
 
 [https://console.aws.amazon.com/](https://console.aws.amazon.com/)
 
@@ -19,11 +19,10 @@ That's the GUI. Sign in as the Root user.
 
 <img src="img/Root-user-login.png" alt="Root user login" width="300"/>
 
-![Root user login](img/Root-user-login.png)
 
 
 
-## Configure Free Tier Usage Alerts
+### Configure Free Tier Usage Alerts
 
 In Management Console search for *Billing*.
 
@@ -31,7 +30,7 @@ In Management Console search for *Billing*.
 
 
 
-## Create IAM user for daily use
+### Create IAM user for daily use
 
 In Management Console search for *IAM*.
 
@@ -47,7 +46,7 @@ Copy IAM user's access key and access key ID for later use.
 
 
 
-## Install AWS CLI locally
+### Install AWS CLI locally
 
 [Start here.](https://aws.amazon.com/cli/)
 
@@ -64,7 +63,7 @@ aws iam list-users
 ```
 
 
-## Install Terraform locally
+### Install Terraform locally
 
  [Start here.](https://learn.hashicorp.com/tutorials/terraform/install-cli)
 
@@ -84,7 +83,7 @@ Tipp: If you use VS Code try [Hashicorp's Terraform extension](https://marketpla
 
 ***
 
-## Demo 1 - Terraform Docker
+### Demo 1 - Terraform Docker
 ```bash
 terraform {
   required_providers {
@@ -129,7 +128,7 @@ terraform destroy
 
 ***
 
-## Demo 2 - Terraform EC2
+### Demo 2 - Terraform EC2
 
 At Management Console look for an appropriate AMI (AMI = AWS Machine Image, comparable to Azure VM size).
 
@@ -140,7 +139,7 @@ aws ec2 describe-instances
 aws ec2 describe-key-pairs
 ```
 
-### Side Note: SSH fingerprints in AWS
+#### Side Note: SSH fingerprints in AWS
 ```bash
 # The way AWS calculates the fingerprint depends on the way the key was created:
 
