@@ -19,6 +19,7 @@ That's the GUI. Sign in as the Root user.
 
 <img src="img/Root-user-login.png" alt="Root user login" width="300"/>
 
+![Root user login](img/Root-user-login.png)
 
 
 
