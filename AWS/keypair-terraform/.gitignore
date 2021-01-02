@@ -17,7 +17,6 @@ crash.log
 #
 # example.tfvars
 
-
 # key pair example
 foo3
 foo3.pub
