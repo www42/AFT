@@ -1,10 +1,8 @@
-# AFT Azure for Trainers
+# AFT        Azure | AWS for Trainers
 
 ### Last Meetup: 21. Dezember 2020             
 * [Summary](AWS/README.md)
 
-<br>
-<br>
 <br>
 
 ### Next Meetup: 14. Januar 2021
