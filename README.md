@@ -1,12 +1,13 @@
-# Azure For Trainers
-## Last Meetup: 21. Dezember 2020             
+# AFT Azure for Trainers
+
+### Last Meetup: 21. Dezember 2020             
 * [Summary](AWS/README.md)
 
 <br>
 <br>
 <br>
 
-## Next Meetup: 14. Januar 2021
+### Next Meetup: 14. Januar 2021
 
 * [AWS CloudShell](https://docs.aws.amazon.com/cloudshell/latest/userguide/working-with-cloudshell.html)
 
