@@ -7,6 +7,8 @@
 
 ### Next Meetup: 14. Januar 2021
 
+* [Microsoft Ignite](https://myignite.microsoft.com/home)
+
 * [AWS CloudShell](https://docs.aws.amazon.com/cloudshell/latest/userguide/working-with-cloudshell.html)
 
 * [JMESPath](https://jmespath.org/)
