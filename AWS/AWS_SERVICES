@@ -1,0 +1,20 @@
+AWS     Shield          DDos protection
+Amazon  GuardDuty       threat detection, monitors malicious activities and unauthorized behavior to protect accounts, workloads and data stored in S3
+Amazon  Inspector       automated security assessment, security and compliance of applications
+Amazon  Macie           automates the discovery of sensitive data at scale and lowers the cost of protecting your data
+AWS     Security Hub    gives you a comprehencive view of your security alerts and security posture
+Amazon  Cognito         helps to provide user access control for mobile & web apps
+AWS     Trusted Advisor helps to reduce costs, increase performance, and improve security by optimizing your AWS environment
+
+AWS     Control Tower   set up and govern a new, secure multi -account AWS environment
+Amazon  CloudWatch      monitoring and observability service
+AWS     CloudTrail      monitor all API activity conducted on all AWS services
+
+Amazon  Athena          serverless query service used to analyse Big Data stored in S3
+AWS     Snowball        data transport solution
+Amazon  Redshift        data warehouse solution, petabyte-scale
+
+CodeGuru            developer tool, ML, provides intelligent recommendiations for improving code quality
+CodeBuild           fully managed CI service, copiles code, runs tests, produces software packages ready to deploy
+CodeArtifact        fully managed artifact repository
+CodeStar            develop, build, deploy applications quickly. All development activities in one placeº

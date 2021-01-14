@@ -8,8 +8,8 @@ aws ec2 describe-security-groups --query "SecurityGroups[*].[Description]"
 
 
 # Von allen SecurityGroups möchte ich die Description und GroupName haben als Array
-aws ec2 describe-security-groups --query "SecurityGroups[*].[Description,GroupName]"
-az group list                    --query "[].[name,location]"
+aws ec2 describe-security-groups --query "SecurityGroups[].[Description,GroupName]"
+az group list                    --query "[*].[name,location]"
 
 # Jetzt nicht als Array, sondern als Object
 aws ec2 describe-security-groups --query "SecurityGroups[*].{}"          # doesn't work
