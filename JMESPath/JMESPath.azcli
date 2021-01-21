@@ -1,0 +1,112 @@
+# =============================
+# There are arrays and object.
+# =============================
+
+# Array = List                                                --> suare brackets []
+# Object = Dictionary = Hash = Collection of Key:Value pairs  --> curly brackets {}
+
+
+# Selecting Array Elements
+# ------------------------
+az group list                           # array starting point
+az group list --query "[*]"             # all elements (pass through the whole array)
+az group list --query "[0]"             # first element
+az group list --query "[1]"             # second element
+az group list --query "[-1]"            # last element
+az group list --query "[0:2]"           # [a:b]  slicing from a to b-1  (sic!)
+
+# Fun fact: Slicing always generates an array
+az group list --query "[0]"             # single object
+az group list --query "[:1]"            # array (with a single object)
+
+# Flatten an Array
+az group list --query "[]"              # flatten the array 
+                                        # What is a difference between [*] and []
+
+# Selecting an Individual Value of an Object
+# ------------------------------------------
+az group list --query "[0]"             # single object starting point
+az group list --query "[0].location"    # value is a string surrounded by double quotes
+az group list --query "[0].managedBy"   # value is 'null'
+az group list --query "[0].properties"  # value is an object
+az group list --query "[0].properties.provisioningState"  # value for provisioningState within the properties object
+
+
+# Selecting Multiple Values
+# -------------------------
+az group list --query "[0].[name,location]"
+az group list --query "[0].[name,location,properties]"
+az group list --query "[*].[name,location,properties]"
+az group list --query "[*].[name,location,properties]" --output table
+
+# Magic trick #1
+#   Object instead of array 
+az group list --query "[*].{name,location}"                 # doesn't work - keys are missing
+az group list --query "[*].{foo:name,bar:location}"         # keys added
+az group list --query "[*].{name:name,location:location}"   # better keys
+
+# Tipp: Use variable to store complex queries
+query="[*].{name:name,location:location}"
+az group list --query $query
+
+
+# Filter Objects (Projection Operator)   [?key=='value']
+# ------------------------------------------------------
+az group list --query "[?name=='Cloudshell-RG']"
+az group list --query "[?name=='Cloudshell-RG' && location=='westeurope']"  #  &&    logical AND
+                                                                            #  ||    logical OR
+
+# What other comapators do exist?
+#   ==  equal
+#   !=  not equal
+#   >   greater then (numeric values only)
+#   etc
+
+
+# Functions
+# ---------
+
+# length()
+az group list --query "length([*])"                         # number of elements
+
+# starts_with()
+az group list --query "[?starts_with(name, 'Cloud')].name"
+az group list --query "[?ends_with(name, '-RG')].name"
+az group list --query "[?contains(name, 'e')].name"
+
+# sort()    --> Sorting array  
+az group list --query "sort([*].name)"
+az group list --query "reverse(sort([*].name))"
+
+
+# sort_by() --> Sorting array of objects       
+az group list --query "sort_by([*], &name)"
+az group list --query "reverse(sort_by([*], &name))"
+
+
+# Pipe Expressions
+az group list --query "[?name=='Cloudshell-RG'].name"           # array of a single string
+az group list --query "[?name=='Cloudshell-RG'].name | [0]"     # string
+
+# Fun fact: Die zwei Zeilen darüber ergeben denselben output bei Verwendung von '--output tsv'
+
+
+# Flatten Operator
+# ----------------
+jpterm flat1.json
+# [*]   [1,2,[3,[4,5],6],7,[8,9]]
+# []    [1,2,3,[4,5],6,7,8,9]
+# [][]  [1,2,3,4,5,6,7,8,9]
+
+jpterm flat2.json
+#   foo[*]          # list of two objects   [{n:[1,2,3]},{n:[4,5,6]}]
+#   foo[]           # ist nicht notwendig, [] plättet nur arrays?
+
+#   foo[*].numbers      #                       [[1,2,3],[4,5,6]]
+#   foo[*].numbers.[]   #                       [1,2,3,4,5,6]
+#   foo[*].numbers.[].{numbers:}   #                       [1,2,3,4,5,6]
+
+
+# Tool jpterm
+# -----------
+#  control-5 erase JMESPath expression
