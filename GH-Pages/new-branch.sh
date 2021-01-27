@@ -7,7 +7,7 @@ git checkout gh-pages
 
 # rm *
 
-echo "<h1>Happy New Year</h1>" > index.html
+echo "<h1>This is index.html</h1>" > index.html
 
 git add index.html
 git commit -a -m "happy new year"
