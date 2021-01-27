@@ -1,16 +1,14 @@
 # AFT        Azure | AWS for Trainers
 
 ### Last Meetup: 21. Dezember 2020             
-* [Summary](AWS/README.md)
+* [JMESPath](JMESPath/JMESPath.md)
 
 <br>
 
-### Next Meetup: 14. Januar 2021
+### Next Meetup: 28. Januar 2021
 
 * [Microsoft Ignite](https://myignite.microsoft.com/home)
 
-* [AWS CloudShell](https://docs.aws.amazon.com/cloudshell/latest/userguide/working-with-cloudshell.html)
+* [Bicep Lang](https://devblogs.microsoft.com/devops/project-bicep-demo-at-ignite-2020-by-mark-russinovich/)
 
-* [JMESPath](https://jmespath.org/)
- 
-* [GitHub Pages](https://docs.github.com/en/free-pro-team@latest/github/working-with-github-pages/getting-started-with-github-pages)
+* [GitHub Pages](https://pages.github.com/)
