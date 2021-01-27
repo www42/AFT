@@ -1,0 +1,28 @@
+# Configure GitHub Pages and priority order of index file
+# ========================================================
+
+GitHub                                          GitHub Pages                                          
+github.com/www42/foo                            www42.github.io/foo
+--------------------                            -------------------
+Create new Repo "foo"
+Activate and edit README.md
+Settings - GitHub Pages source main /(root)
+About - Paste URL www42.github.io/foo           content of README.md
+
+
+New file index.md                               content of index.md
+
+New file index.html                             content of index.html
+
+--> Priority order
+    1.  index.html
+    2.  index.md
+    3.  README.md
+
+
+# Jekyll themes out of the box
+# =============================
+
+Chose theme "Time Machine"                      content of index.html, no theme applied because of html
+
+Delete index.html                               content of index.md, theme applied
