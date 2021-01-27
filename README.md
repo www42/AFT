@@ -1,8 +1,9 @@
-# AFT        Azure | AWS for Trainers
+# AFT  Azure for Trainers
 
 ### Last Meetups:              
-* 21. Dezember 2020 [AWS First Steps](AWS/README.md)
-* 21. Januar 2020 [JMESPath](JMESPath/JMESPath.md)
+* [AWS First Steps](AWS/README.md)
+
+* [JMESPath Queries](JMESPath/JMESPath.md)
 
 <br>
 
