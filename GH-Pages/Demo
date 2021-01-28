@@ -46,3 +46,9 @@ compare
 <Pause for effect>
 
 Choose another theme "Hacker"
+
+
+# Jekyll blog site
+# ----------------
+jekyll new . --force                        # creates file structure, and first blog post
+bundle exec jekyll serve --livereload       # start jekyll locally http://localhost:4000
