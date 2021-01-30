@@ -52,3 +52,26 @@ Choose another theme "Hacker"
 # ----------------
 jekyll new . --force                        # creates file structure, and first blog post
 bundle exec jekyll serve --livereload       # start jekyll locally http://localhost:4000
+
+_config.yml
+    baseurl: "/bar"
+    url: "https://www42.github.io"
+
+
+# New blog post
+# -------------
+
+dashTitle='my-second-blog'
+title='My second blog'
+categories='Foo Bar'
+
+dashDate=$(date "+%Y-%m-%d")
+Date=$(date "+%Y-%m-%d %H:%M:%S %z")
+
+file="_posts/$dashDate-$dashTitle.md"
+echo '---' > $file
+echo 'layout: post' >> $file
+echo "title:  \"$title\"" >> $file
+echo 'date:   2021-01-29 21:33:24 +0100' >> $file
+echo "categories: $categories" >> $file
+echo '---' >> $file
