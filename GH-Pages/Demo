@@ -58,20 +58,28 @@ _config.yml
     url: "https://www42.github.io"
 
 
+# -------------
 # New blog post
 # -------------
 
-dashTitle='my-second-blog'
-title='My second blog'
-categories='Foo Bar'
+# Create post file and (empty) image directory
+# Populate post file with front matter
 
-dashDate=$(date "+%Y-%m-%d")
-Date=$(date "+%Y-%m-%d %H:%M:%S %z")
+postdate="2021-01-28"
+postname="$postdate-github-pages"
 
-file="_posts/$dashDate-$dashTitle.md"
-echo '---' > $file
-echo 'layout: post' >> $file
-echo "title:  \"$title\"" >> $file
-echo 'date:   2021-01-29 21:33:24 +0100' >> $file
-echo "categories: $categories" >> $file
-echo '---' >> $file
+postfile="_posts/$postname.md"
+touch $postfile
+
+postimgpath=assets/images/$postname
+mkdir -p $postimgpath
+
+echo '---'                                                       >  $postfile
+echo 'layout:     post'                                          >> $postfile
+echo 'title:      "GitHub Pages - Getting started"'              >> $postfile
+echo 'date:       2021-01-28 17:30:00 +0100'                     >> $postfile
+echo 'categories: Git GitHub'                                    >> $postfile
+echo "image:      $postimgpath/foo.png"                          >> $postfile
+echo '---'                                                       >> $postfile
+
+cat $postfile
