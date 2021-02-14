@@ -1,0 +1,7 @@
+Deployment failed. Correlation ID: b0d8535f-9b6b-4b8b-9aeb-ecec6ebf2030. {
+  "error": {
+    "code": "SubscriptionNotRegisteredForFeature",
+    "message": "Subscription ffcb38a5-8428-40c4-98b7-77013eac7ec5 is not registered for feature Microsoft.Network/AllowMultipleAddressPrefixesOnSubnet required to carry out the requested operation.",
+    "details": []
+  }
+}

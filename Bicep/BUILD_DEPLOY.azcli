@@ -1,0 +1,28 @@
+template="virtualNetwork"
+
+# ---------------------------
+bicep build $template.bicep
+# ---------------------------
+
+deploymentName="foo10"
+#az deployment group create --parameters name=storage$RANDOM$RANDOM --template-file $template.json --resource-group $rgName --name $deploymentName
+az deployment group create --parameters virtualNetwork.parameters.json --template-file $template.json --resource-group $rgName --name $deploymentName
+az deployment group create --parameters virtualNetwork.parameters.json --parameters name=VNet3 --template-file $template.json --resource-group $rgName --name $deploymentName
+
+az deployment group list --resource-group $rgName --query "reverse(sort_by([].{name:name,provisioningState:properties.provisioningState,timestamp:properties.timestamp},&timestamp))" --output table
+
+outputId="vnetId"
+az deployment group show --name $deploymentName --resource-group $rgName --query "{mode:properties.mode,duration:properties.duration,output:properties.outputs.$outputId.value}" --output table
+
+az resource list --resource-group $rgName --query "sort_by([].{name:name,Type:type,location:location},&Type)" --output table
+
+
+templateRoot="https://raw.githubusercontent.com/www42/arm/master/templates"
+az deployment group create --name tabulaRasa01 --resource-group $rgName --mode Complete --template-uri "$templateRoot/empty.json" --no-wait
+
+az group create --name $rgName --location $location
+location="westeurope"
+rgName="foo-RG"
+az group list --query "[].{name:name,location:location,provisioningState:properties.provisioningState}" --output table
+az account show
+az login
