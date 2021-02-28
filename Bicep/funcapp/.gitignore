@@ -1,0 +1,2 @@
+# Ignore arm templates - we are doing bicep!
+.json

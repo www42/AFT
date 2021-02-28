@@ -31,3 +31,9 @@ There is no `dependsOn` in bicep file. Dependencies are added by bicep build.
 * Type `resource` in a new file named foo.bicep. The file name .bicep will activate the bicep language server in VS Code.
 
 ![Start typing](img/start-typing.png)
+
+### Bicep in Microsoft's Docs
+
+[Example 1](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/template-outputs?tabs=json%2Cazure-powershell)
+
+[Example 2](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/template-variables?tabs=bicep)

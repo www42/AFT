@@ -1,0 +1,18 @@
+# Deploy Function Apps
+# ---------------------
+rgName='Functions-RG'
+location='westeurope'
+
+funcAppName="funcApp$((1000 + $RANDOM % 8999))"; echo -e "\n $funcAppName\n"
+
+# Original ARM template
+az deployment group create --name original01 --resource-group $rgName --template-file funcapp_ORIGINAL_ARM.json --parameters functionAppName=$funcAppName
+
+# Bicep
+bicep build funcapp.bicep && ls -l funcapp.*
+az deployment group create --name bicep01 --resource-group $rgName --template-file funcapp.json --parameters functionAppName=$funcAppName
+
+az functionapp list --resource-group $rgName --query "[].{hostNames:hostNames[0],state:state,resourceGroup:resourceGroup}" --output table
+
+az deployment group list --resource-group $rgName --query "reverse(sort_by([].{Name:name,provisioningState:properties.provisioningState,timestamp:properties.timestamp}, &timestamp))" --output table
+az deployment group show --resource-group $rgName --name bicep01 --query "properties.outputs"
