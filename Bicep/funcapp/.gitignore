@@ -1,2 +1,2 @@
-# Ignore arm templates - we are doing bicep!
-.json
+# Ignore ARM templates - we are doing Bicep!
+*.json
