@@ -1,0 +1,25 @@
+# Deploy Log Analytics Workspace
+# ------------------------------
+
+wsName="log$((1000 + $RANDOM % 8999))"; echo -e "\n --> $wsName <--\n"
+
+bicep build ws.bicep && ls -l ws.*
+
+az deployment group create --name bicep03 --resource-group $rgName --template-file ws.json --parameters wsName=$wsName
+
+az resource list --resource-group $rgName --resource-type 'Microsoft.OperationalInsights/workspaces' --query "[].{name:name,location:location,provisioningState:provisioningState}" --output table
+
+az deployment group list --resource-group $rgName --query "reverse(sort_by([].{Name:name,provisioningState:properties.provisioningState,timestamp:properties.timestamp}, &timestamp))" --output table
+az deployment group show --resource-group $rgName --name bicep03 --query "properties.outputs"
+
+templateRoot="https://raw.githubusercontent.com/www42/arm/master/templates"
+az deployment group create --name tabulaRasa01 --resource-group $rgName --mode Complete --template-uri "$templateRoot/empty.json" --no-wait
+
+
+az group delete --resource-group $rgName --yes --no-wait
+
+az group list --query "[].{name:name,location:location,provisioningState:properties.provisioningState}" --output table
+az group create --name $rgName --location $location
+
+location='westeurope'
+rgName='Monitoring-RG'

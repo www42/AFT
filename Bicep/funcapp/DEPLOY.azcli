@@ -16,3 +16,5 @@ az functionapp list --resource-group $rgName --query "[].{hostNames:hostNames[0]
 
 az deployment group list --resource-group $rgName --query "reverse(sort_by([].{Name:name,provisioningState:properties.provisioningState,timestamp:properties.timestamp}, &timestamp))" --output table
 az deployment group show --resource-group $rgName --name bicep01 --query "properties.outputs"
+
+az group delete --resource-group $rgName --yes --no-wait
