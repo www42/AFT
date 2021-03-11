@@ -1,11 +1,11 @@
-param name string = 'Vnet1'
+param vnetName string = 'vNet1'
 param location string = resourceGroup().location
 
-resource Vnet1 'Microsoft.Network/virtualNetworks@2020-06-01' = {
-  name: name
+resource vnet 'Microsoft.Network/virtualNetworks@2020-06-01' = {
+  name: vnetName
   location: location
   properties: {
-    addressSpace: {
+    addressSpace:{
       addressPrefixes: [
         '10.0.0.0/16'
       ]
@@ -21,4 +21,4 @@ resource Vnet1 'Microsoft.Network/virtualNetworks@2020-06-01' = {
   }
 }
 
-output vnetId string = Vnet1.id
+output vnetId string = vnet.id
