@@ -1,9 +1,9 @@
 # Deploy virtual Network
 # ----------------------
-file='subnet.bicep'
+# file='subnet.bicep'
 # file='vNet.bicep'
 # file='Bastion.bicep'
-name='bicep04'
+name='bicep01'
 az deployment group validate --parameters vnetName=vNet1 --template-file $file
 az deployment group create --parameters vnetName=vNet1 --template-file $file --name $name --resource-group $rgName 
 
