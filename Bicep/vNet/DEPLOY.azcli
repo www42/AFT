@@ -4,6 +4,7 @@ file='subnet.bicep'
 # file='vNet.bicep'
 # file='Bastion.bicep'
 name='bicep04'
+az deployment group validate --parameters vnetName=vNet1 --template-file $file
 az deployment group create --parameters vnetName=vNet1 --template-file $file --name $name --resource-group $rgName 
 
 az deployment group list --resource-group $rgName --query "reverse(sort_by([].{Name:name,provisioningState:properties.provisioningState,timestamp:properties.timestamp}, &timestamp))" --output table
