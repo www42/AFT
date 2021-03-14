@@ -37,3 +37,37 @@ There is no `dependsOn` in bicep file. Dependencies are added by bicep build.
 [Example 1](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/template-outputs?tabs=json%2Cazure-powershell)
 
 [Example 2](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/template-variables?tabs=bicep)
+
+
+## Demo: AutomationAccount
+
+[ARM template reference | Microsoft Docs](https://docs.microsoft.com/en-us/azure/templates/)
+
+[Microsoft.Automation/automationAccounts ARM template reference | Microsoft Docs](https://docs.microsoft.com/en-us/azure/templates/microsoft.automation/automationaccounts?tabs=json) (Bicep tab!)
+
+### Step 1
+
+* resource
+* parameter
+* output
+
+```bash
+param aaName string = 'DSC-pull'
+param location string = resourceGroup().location
+
+resource aa 'Microsoft.Automation/automationAccounts@2020-01-13-preview' = {
+  name: aaName
+  location: location
+  properties: {
+    sku: {
+      name: 'Free'
+    }
+  }
+}
+
+output aaId string = aa.id
+```
+
+### Step 2
+
+* nested resource

@@ -1,2 +1,0 @@
-# Ignore ARM templates - we are doing Bicep!
-*.json

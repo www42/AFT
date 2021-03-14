@@ -1,18 +1,15 @@
-# Deploy virtual Network
-# ----------------------
-# file='subnet.bicep'
-# file='vNet.bicep'
-# file='Bastion.bicep'
-name='bicep01'
-az deployment group validate --parameters vnetName=vNet1 --template-file $file
-az deployment group create --parameters vnetName=vNet1 --template-file $file --name $name --resource-group $rgName 
+# Deploy scenario oauth
+# ---------------------
+# file='scenario-oauth.bicep'
+file='hybrid.bicep'
+name='bicep02'
+az deployment group create --template-file $file --name $name --resource-group $rgName 
 
 az deployment group list --resource-group $rgName --query "reverse(sort_by([].{Name:name,provisioningState:properties.provisioningState,timestamp:properties.timestamp}, &timestamp))" --output table
+
 az deployment group show --resource-group $rgName --name $name --query "properties.outputs"
 
 az resource list --resource-group $rgName --query "sort_by([].{name:name,Type:type,location:location},&Type)" --output table
-
-az network vnet subnet list --resource-group $rgName --vnet-name vNet1 --query "[].{name:name,addressPrefix:addressPrefix}" --output table
 
 uri="https://raw.githubusercontent.com/www42/arm/master/templates/empty.json"
 az deployment group create --name tabulaRasa01 --resource-group $rgName --mode Complete --template-uri $uri --no-wait
@@ -21,6 +18,5 @@ az group delete --resource-group $rgName --yes --no-wait
 
 az group list --query "[].{name:name,location:location,provisioningState:properties.provisioningState}" --output table
 az group create --name $rgName --location $location
-
 location='westeurope'
-rgName='Networking-RG'
+rgName='Hybrid-RG'
