@@ -1,8 +1,7 @@
 # Deploy scenario oauth
 # ---------------------
-# file='scenario-oauth.bicep'
 file='hybrid.bicep'
-name='bicep02'
+name='bicep01'
 az deployment group create --template-file $file --name $name --resource-group $rgName 
 
 az deployment group list --resource-group $rgName --query "reverse(sort_by([].{Name:name,provisioningState:properties.provisioningState,timestamp:properties.timestamp}, &timestamp))" --output table
@@ -19,4 +18,4 @@ az group delete --resource-group $rgName --yes --no-wait
 az group list --query "[].{name:name,location:location,provisioningState:properties.provisioningState}" --output table
 az group create --name $rgName --location $location
 location='westeurope'
-rgName='Hybrid-RG'
+rgName='Contoso-RG'

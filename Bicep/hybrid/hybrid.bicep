@@ -17,7 +17,7 @@ param vnetSpoke1Subnet0Name string = 'Subnet0'
 param vnetSpoke1Subnet0AddressPrefix string = '172.17.0.0/24'
 
 // Spoke2
-param vnetSpoke2Name string = 'Spoke1'
+param vnetSpoke2Name string = 'Spoke2'
 param vnetSpoke2AddressSpace string = '172.18.0.0/16'
 param vnetSpoke2Subnet0Name string = 'Subnet0'
 param vnetSpoke2Subnet0AddressPrefix string = '172.18.0.0/24'
@@ -29,9 +29,10 @@ param vmAdminPassword string = 'Pa55w.rd1234'
 // DC
 param vmDcName string = 'DC'
 param vmDcSize string = 'Standard_DS2_v2'
-param vmDcIp string = '172.17.0.200'
+param vmDcIp string = '172.16.0.200'
 param vmDcNodeConfigurationName string = 'ADDomain_NewForest.localhost'
 
+// Automation account
 param aaName string = 'Contoso-Automation'
 param aaModuleName string = 'ActiveDirectoryDsc'
 param aaModuleContentLink string = 'https://psg-prod-eastus.azureedge.net/packages/activedirectorydsc.6.0.1.nupkg'
@@ -188,7 +189,7 @@ resource nic_dc 'Microsoft.Network/networkInterfaces@2020-06-01' = {
           privateIPAllocationMethod: 'Static'
           privateIPAddress: vmDcIp
           subnet: {
-            id: spoke1.properties.subnets[0].id
+            id: hub.properties.subnets[0].id
           }
         }
       }
