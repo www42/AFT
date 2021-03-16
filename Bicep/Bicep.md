@@ -34,9 +34,11 @@ There is no `dependsOn` in bicep file. Dependencies are added by bicep build.
 
 ### Bicep in Microsoft's Docs
 
-[Example 1](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/template-outputs?tabs=json%2Cazure-powershell)
+[Example 1: Outputs in ARM templates](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/template-outputs?tabs=json%2Cazure-powershell)
 
-[Example 2](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/template-variables?tabs=bicep)
+[Example 2: Variables in ARM templates](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/template-variables?tabs=bicep)
+
+[Example 3: virtualNetworkGateways Reference](https://docs.microsoft.com/en-us/azure/templates/microsoft.network/virtualnetworkgateways?tabs=json)
 
 
 ## Demo: AutomationAccount
