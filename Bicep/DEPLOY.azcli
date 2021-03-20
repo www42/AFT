@@ -1,7 +1,7 @@
-# Deploy scenario oauth
-# ---------------------
+# Deploy scenario 
+# ----------------
 file='hybrid.bicep'
-name='bicep01'
+name='contoso01'
 az deployment group create --template-file $file --name $name --resource-group $rgName 
 
 az deployment group list --resource-group $rgName --query "reverse(sort_by([].{Name:name,provisioningState:properties.provisioningState,timestamp:properties.timestamp}, &timestamp))" --output table

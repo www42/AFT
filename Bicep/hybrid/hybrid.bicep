@@ -1,6 +1,7 @@
+// Location
 param location string = resourceGroup().location
 
-// Hub
+// Hub network
 param vnetHubName string = 'Hub'
 param vnetHubAddressSpace string = '172.16.0.0/16'
 param vnetHubSubnet0Name string = 'Subnet0'
@@ -10,13 +11,13 @@ param vnetHubSubnet1AddressPrefix string = '172.16.255.32/27'
 param vnetHubSubnet2Name string = 'GatewaySubnet'
 param vnetHubSubnet2AddressPrefix string = '172.16.255.64/29'
 
-// Spoke1
+// Spoke1 network
 param vnetSpoke1Name string = 'Spoke1'
 param vnetSpoke1AddressSpace string = '172.17.0.0/16'
 param vnetSpoke1Subnet0Name string = 'Subnet0'
 param vnetSpoke1Subnet0AddressPrefix string = '172.17.0.0/24'
 
-// Spoke2
+// Spoke2 network
 param vnetSpoke2Name string = 'Spoke2'
 param vnetSpoke2AddressSpace string = '172.18.0.0/16'
 param vnetSpoke2Subnet0Name string = 'Subnet0'
@@ -26,7 +27,7 @@ param vnetSpoke2Subnet0AddressPrefix string = '172.18.0.0/24'
 param vmAdminUserName string = 'Student'
 param vmAdminPassword string = 'Pa55w.rd1234'
 
-// DC
+// DC virtual machine
 param vmDcName string = 'DC'
 param vmDcSize string = 'Standard_DS2_v2'
 param vmDcIp string = '172.16.0.200'
@@ -39,8 +40,12 @@ param aaModuleContentLink string = 'https://psg-prod-eastus.azureedge.net/packag
 param aaConfigurationName string = 'ADDomain_NewForest'
 param aaConfigurationSourceUri string = 'https://raw.githubusercontent.com/www42/arm/master/dscConfigs/ADDomain_NewForest_paramCredentials.ps1'
 
+// Virtual Gateway
+param vgwName string = 'Contoso-Gateway'
+
 var bastionName = '${vnetHubName}-Bastion'
 var bastionPipName = '${vnetHubName}-Bastion-Pip'
+var vgwPipName = '${vgwName}-Pip'
 var aaJobName = '${aaConfigurationName}-Compile'
 
 resource hub 'Microsoft.Network/virtualNetworks@2020-06-01' = {
@@ -172,13 +177,13 @@ resource dc 'Microsoft.Compute/virtualMachines@2020-06-01' = {
     networkProfile:{
       networkInterfaces: [
         {
-          id: nic_dc.id
+          id: dcNic.id
         }
       ]
     }
   }
 }
-resource nic_dc 'Microsoft.Network/networkInterfaces@2020-06-01' = {
+resource dcNic 'Microsoft.Network/networkInterfaces@2020-06-01' = {
   name: '${vmDcName}-Nic'
   location: location
   properties: {
@@ -196,7 +201,7 @@ resource nic_dc 'Microsoft.Network/networkInterfaces@2020-06-01' = {
     ]
   }
 }
-resource extension_dc 'Microsoft.Compute/virtualMachines/extensions@2020-06-01' = {
+resource dcExtension 'Microsoft.Compute/virtualMachines/extensions@2020-06-01' = {
   name: '${dc.name}/Dsc'
   location: location
   dependsOn: [
@@ -302,8 +307,43 @@ resource aaJob 'Microsoft.Automation/automationAccounts/compilationjobs@2020-01-
     }
   }
 }
+/*
+resource vgw 'Microsoft.Network/virtualNetworkGateways@2020-06-01' = {
+  name: vgwName
+  location: location
+  properties: {
+    gatewayType: 'Vpn'
+    vpnType: 'RouteBased'
+    vpnGatewayGeneration: 'Generation2'
+    sku: {
+      name: 'VpnGw1'
+    }
+    ipConfigurations: [
+      {
+        name: 'ipConfig1'
+        properties: {
+          publicIPAddress: {
+            id: vgwPip.id
+          }
+          subnet: {
+            id: hub.properties.subnets[2].id
+          }
+        }
+      }
+    ]
+  }
+}
+resource vgwPip 'Microsoft.Network/publicIPAddresses@2020-06-01' = {
+  name: vgwPipName
+  location: location
+  sku: {
+    name: 'Basic'    
+  }
+  properties: {
+    publicIPAllocationMethod: 'Dynamic'
+  }
+}
+*/
 
-output hubId string = hub.id
 output bastionId string = bastion.id
-output dcId string = dc.id
-output aaId string = aa.id
+// output vgwIp string = vgwPip.properties.ipAddress
