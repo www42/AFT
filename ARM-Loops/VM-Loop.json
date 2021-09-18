@@ -88,7 +88,10 @@
                 "addressSpace": {
                     "addressPrefixes": "[parameters('subnetAddressPrefixes')]"
                 }
-            }
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroupName'))]"
+            ]
         },
         {
             "type": "Microsoft.Network/virtualNetworks/subnets",
@@ -106,8 +109,7 @@
                 }
             },
             "dependsOn": [
-                "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]",
-                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroupName'))]"
+                "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]"
             ]
         },
         {
