@@ -1,0 +1,29 @@
+# file=Resource-Loop.json
+# file=Variable-Loop.json
+file=VM-Loop.json
+
+resourceGroupName=Loop-RG
+location=westeurope
+
+# --- Deploy to resource group -----------------
+az deployment group create --resource-group $resourceGroupName --template-file $file 
+
+az deployment group list --resource-group $resourceGroupName --query "reverse(sort_by([].{Name:name,provisioningState:properties.provisioningState,timestamp:properties.timestamp}, &timestamp))" --output table
+az deployment group show --resource-group $resourceGroupName --name $(echo $file | sed 's/.json//')
+az deployment group show --resource-group $resourceGroupName --name $(echo $file | sed 's/.json//') --query "properties.outputs.result.value"
+az deployment group delete --resource-group $resourceGroupName --name $(echo $file | sed 's/.json//') 
+
+az resource list --resource-group $resourceGroupName --query "sort_by([].{name:name,Type:type,location:location},&Type)" --output table
+
+
+# --- Tabula rasa resource group ---------------
+az deployment group create --name 'tabulaRasa' --resource-group $resourceGroupName --mode Complete --template-uri "https://raw.githubusercontent.com/www42/arm/master/templates/empty.json" --no-wait
+
+
+# --- Delete resource group --------------------
+az group delete --resource-group $resourceGroupName --yes --no-wait
+
+
+# --- Create resource group --------------------
+az group list --output table
+az group create --resource-group $resourceGroupName --location $location
