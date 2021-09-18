@@ -99,6 +99,8 @@
             "location": "[parameters('location')]",
             "copy": {
                 "name": "subnetLoop",
+                "mode": "Serial",
+                "batchSize": 1,
                 "count": "[variables('subnetCount')]"
             },
             "name": "[concat( parameters('virtualNetworkName'), '/', parameters('subnetNames')[copyIndex()])]",
@@ -117,6 +119,13 @@
         "virtualNetworkResourceId": {
             "type": "string",
             "value": "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]"
-        }        
+        },
+        "subnetResourceIds": {
+            "type": "array",
+            "copy": {
+                "count": "[variables('subnetCount')]",
+                "input": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('subnetNames')[copyIndex()])]"
+            }
+        }    
     }
 }
