@@ -111,32 +111,7 @@
             "dependsOn": [
                 "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]"
             ]
-        },
-        {
-            "type": "Microsoft.Network/networkInterfaces",
-            "apiVersion": "2020-11-01",
-            "location": "[parameters('location')]",
-            "copy": {
-                "name": "virtualMachineLoop",
-                "count": "[variables('virtualMachineCount')]"
-            },
-            "name": "[variables('networkInterfaceNames')[copyIndex()]]",
-            "properties": {
-                "ipConfigurations": [
-                   { 
-                       "name": "ipconfig1",
-                       "properties": {
-                           "subnet": {
-                               "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('subnetNames')[copyIndex()])]"
-                           }
-                       }
-                   }
-               ]
-            },
-            "dependsOn": [
-                "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('subnetNames')[copyIndex()])]"
-            ]
-        } 
+        }
     ],
     "outputs": {
         "virtualNetworkResourceId": {
