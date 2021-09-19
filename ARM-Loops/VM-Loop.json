@@ -90,7 +90,7 @@
                 }
             },
             "dependsOn": [
-                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroupName'))]"
+                "[parameters('networkSecurityGroupName')]"
             ]
         },
         {
@@ -111,7 +111,7 @@
                 }
             },
             "dependsOn": [
-                "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]"
+                "[parameters('virtualNetworkName')]"
             ]
         }
     ],
