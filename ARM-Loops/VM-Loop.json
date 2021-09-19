@@ -113,6 +113,30 @@
             "dependsOn": [
                 "[parameters('virtualNetworkName')]"
             ]
+        },
+        {
+            "type": "Microsoft.Network/networkInterfaces",
+            "apiVersion": "2020-11-01",
+            "location": "[parameters('location')]",
+            "copy": {
+                "name": "networkInterfaceLoop",
+                "count": "[variables('virtualMachineCount')]"
+            },
+            "name": "[variables('networkInterfaceNames')[copyIndex()]]",
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "ipConfig",
+                        "properties": {
+                            "subnet": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('subnetNames')[copyIndex()])]",
+                            "privateIPAllocationMethod": "Dynamic"
+                        }
+                    }
+                ]
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('subnetNames')[copyIndex()])]"
+            ]
         }
     ],
     "outputs": {
