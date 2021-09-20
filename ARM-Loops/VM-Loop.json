@@ -128,7 +128,9 @@
                     {
                         "name": "ipConfig",
                         "properties": {
-                            "subnet": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('subnetNames')[copyIndex()])]",
+                            "subnet": {
+                                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('subnetNames')[copyIndex()])]"
+                            },
                             "privateIPAllocationMethod": "Dynamic"
                         }
                     }
