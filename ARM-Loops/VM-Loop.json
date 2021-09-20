@@ -69,8 +69,7 @@
         ]
     },
     "resources": [
-        {
-            "type": "Microsoft.Network/networkSecurityGroups",
+        { "type": "Microsoft.Network/networkSecurityGroups",
             "apiVersion": "2020-11-01",
             "location": "[parameters('location')]",
             "name": "[parameters('networkSecurityGroupName')]",
@@ -96,8 +95,7 @@
                 ]
             }
         },
-        {
-            "type": "Microsoft.Network/virtualNetworks",
+        { "type": "Microsoft.Network/virtualNetworks",
             "apiVersion": "2020-11-01",
             "location": "[parameters('location')]",
             "name": "[parameters('virtualNetworkName')]",
@@ -110,8 +108,7 @@
                 "[parameters('networkSecurityGroupName')]"
             ]
         },
-        {
-            "type": "Microsoft.Network/virtualNetworks/subnets",
+        { "type": "Microsoft.Network/virtualNetworks/subnets",
             "apiVersion": "2020-11-01",
             "location": "[parameters('location')]",
             "copy": {
@@ -131,8 +128,7 @@
                 "[parameters('virtualNetworkName')]"
             ]
         },
-        {
-            "type": "Microsoft.Network/networkInterfaces",
+        { "type": "Microsoft.Network/networkInterfaces",
             "apiVersion": "2020-11-01",
             "location": "[parameters('location')]",
             "copy": {
@@ -157,8 +153,7 @@
                 "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('subnetNames')[copyIndex()])]"
             ]
         },
-        {
-            "type": "Microsoft.Compute/virtualMachines",
+        { "type": "Microsoft.Compute/virtualMachines",
             "apiVersion": "2021-03-01",
             "location": "[parameters('location')]",
             "copy": {
