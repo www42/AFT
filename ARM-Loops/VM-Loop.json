@@ -37,6 +37,18 @@
                 "VM2",
                 "VM3"
             ]
+        },
+        "virtualMachineSize": {
+            "type": "string",
+            "defaultValue": "Standard_DS2_v2"
+        },
+        "adminUserName": {
+           "type": "string",
+           "defaultValue": "Student"
+        },
+        "adminPassword": {
+           "type": "securestring",
+           "defaultValue": "Pa55w.rd1234"
         }
     },
     "functions": [],
@@ -47,7 +59,12 @@
             {
                 "name": "networkInterfaceNames",
                 "count": "[variables('virtualMachineCount')]",
-                "input": "[concat( parameters('virtualMachineNames')[copyIndex('networkInterfaceNames')], '-Nic')]"
+                "input": "[concat(parameters('virtualMachineNames')[copyIndex('networkInterfaceNames')], '-Nic')]"
+            },
+            {
+                "name": "vmOsDiskNames",
+                "count": "[variables('virtualMachineCount')]",
+                "input": "[concat(parameters('virtualMachineNames')[copyIndex('vmOsDiskNames')], '-Disk')]"
             }
         ]
     },
@@ -139,7 +156,50 @@
             "dependsOn": [
                 "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('subnetNames')[copyIndex()])]"
             ]
-        }
+        },
+        {
+            "type": "Microsoft.Compute/virtualMachines",
+            "apiVersion": "2021-03-01",
+            "location": "[parameters('location')]",
+            "copy": {
+                "name": "virtualMachineLoop",
+                "count": "[variables('virtualMachineCount')]"
+            },
+            "name": "[parameters('virtualMachineNames')[copyIndex()]]",
+            "properties": {
+                "hardwareProfile": {
+                    "vmSize": "[parameters('virtualMachineSize')]"
+                },
+                "storageProfile": {
+                    "imageReference": {
+                        "publisher": "MicrosoftWindowsServer",
+                        "offer": "WindowsServer",
+                        "sku": "2019-Datacenter",
+                        "version": "latest"
+                    },
+                    "osDisk": {
+                        "name": "[variables('vmOsDiskNames')[copyIndex()]]",
+                        "caching": "ReadWrite",
+                        "createOption": "FromImage"
+                    }
+                },
+                "osProfile": {
+                    "computerName": "[parameters('virtualMachineNames')[copyIndex()]]",
+                    "adminUsername": "[parameters('adminUserName')]",
+                    "adminPassword": "[parameters('adminPassword')]"
+                },
+                "networkProfile": {
+                    "networkInterfaces": [
+                        {
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', variables('networkInterfaceNames')[copyIndex()])]"
+                         }
+                    ]
+                }
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/networkInterfaces', variables('networkInterfaceNames')[copyIndex()])]"
+            ]
+         }
     ],
     "outputs": {
         "virtualNetworkResourceId": {
