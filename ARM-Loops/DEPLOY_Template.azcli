@@ -2,16 +2,20 @@
 # file=Variable-Loop.json
 file=VM-Loop.json
 
+fileNoJson=$(echo $file | sed 's/.json//')
+
 resourceGroupName=Loop-RG
 location=westeurope
 
 # --- Deploy to resource group -----------------
-az deployment group create --resource-group $resourceGroupName --template-file $file 
+datestring=$(date +"%Y-%m-%d-%H-%M-%S")
+deploymentName="$fileNoJson-$datestring"
+az deployment group create --name $deploymentName --resource-group $resourceGroupName --template-file $file 
 
-az deployment group list --resource-group $resourceGroupName --query "reverse(sort_by([].{Name:name,provisioningState:properties.provisioningState,timestamp:properties.timestamp}, &timestamp))" --output table
-az deployment group show --resource-group $resourceGroupName --name $(echo $file | sed 's/.json//')
-az deployment group show --resource-group $resourceGroupName --name $(echo $file | sed 's/.json//') --query "properties.outputs.result.value"
-az deployment group delete --resource-group $resourceGroupName --name $(echo $file | sed 's/.json//') 
+az deployment group list   --resource-group $resourceGroupName --query "reverse(sort_by([0:4].{Name:name,provisioningState:properties.provisioningState,timestamp:properties.timestamp}, &timestamp))" --output table
+az deployment group show   --resource-group $resourceGroupName --name $deploymentName
+az deployment group show   --resource-group $resourceGroupName --name $deploymentName --query "properties.outputs.virtualNetworkResourceId.value"
+az deployment group delete --resource-group $resourceGroupName --name $deploymentName 
 
 az resource list --resource-group $resourceGroupName --query "sort_by([].{name:name,Type:type,location:location},&Type)" --output table
 
