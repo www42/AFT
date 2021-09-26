@@ -65,6 +65,11 @@
                 "name": "vmOsDiskNames",
                 "count": "[variables('virtualMachineCount')]",
                 "input": "[concat(parameters('virtualMachineNames')[copyIndex('vmOsDiskNames')], '-Disk')]"
+            },
+            {
+                "name": "vmPublicIpNames",
+                "count": "[variables('virtualMachineCount')]",
+                "input": "[concat(parameters('virtualMachineNames')[copyIndex('vmPublicIpNames')], '-Pip')]"
             }
         ]
     },
@@ -144,13 +149,17 @@
                             "subnet": {
                                 "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('subnetNames')[copyIndex()])]"
                             },
-                            "privateIPAllocationMethod": "Dynamic"
+                            "privateIPAllocationMethod": "Dynamic",
+                            "publicIPAddress": {
+                                "id": "[resourceId('Microsoft.Network/publicIPAddresses',variables('vmPublicIpNames')[copyIndex()])]"
+                            }
                         }
                     }
                 ]
             },
             "dependsOn": [
-                "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('subnetNames')[copyIndex()])]"
+                "[parameters('subnetNames')[copyIndex()]]",
+                "[variables('vmPublicIpNames')[copyIndex()]]"
             ]
         },
         { "type": "Microsoft.Compute/virtualMachines",
@@ -194,7 +203,22 @@
             "dependsOn": [
                 "[resourceId('Microsoft.Network/networkInterfaces', variables('networkInterfaceNames')[copyIndex()])]"
             ]
-         }
+        },
+        { "type": "Microsoft.Network/publicIPAddresses",
+            "apiVersion": "2020-11-01",
+            "location": "[parameters('location')]",
+            "copy": {
+                "name": "publicIPAddressLoop",
+                "count": "[variables('virtualMachineCount')]"
+            },
+            "name": "[variables('vmPublicIpNames')[copyIndex()]]",
+            "properties": {
+                "publicIPAllocationMethod": "Dynamic"
+            },
+            "sku": {
+                "name": "Basic"
+            }
+        }
     ],
     "outputs": {
         "virtualNetworkResourceId": {
