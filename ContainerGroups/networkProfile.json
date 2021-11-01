@@ -1,0 +1,36 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {},
+    "functions": [],
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.Network/networkProfiles",
+            "apiVersion": "2020-11-01",
+            "name": "MyNetworkProfile",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "containerNetworkInterfaceConfigurations": [
+                    {
+                        "name": "foo",
+                        "properties": {
+                            "ipConfigurations": [
+                                {
+                                    "name": "ipconfig1",
+                                    "properties": {
+                                        "subnet": {
+                                            "id": "/subscriptions/ffcb38a5-8428-40c4-98b7-77013eac7ec5/resourceGroups/ACI-RG/providers/Microsoft.Network/virtualNetworks/vnet2/subnets/subnet0"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+
+        }
+    ],
+    "outputs": {}
+}

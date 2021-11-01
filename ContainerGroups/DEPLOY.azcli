@@ -1,0 +1,83 @@
+file='azuredeploy.json'
+rgName='ACI-RG'
+location='westeurope'
+
+# --- List resources ---------------------------
+az container list --resource-group $rgName --query "[0]"
+az container list --resource-group $rgName --query "[0].containers[1].image"
+az container list --resource-group $rgName --query "[0].containers[*].image"
+az container list --resource-group $rgName --query "[0].containers[].image"
+az container list --resource-group $rgName --query "[].containers[].image"
+
+az container list --resource-group $rgName --query "[].{Id:id}"
+az container list --resource-group $rgName --query "[].{Id:id}" --output table
+
+
+az container list --resource-group $rgName --query "[].containers[].image"
+az container list --resource-group $rgName --query "[].{Id:id,image:containers[].image}"
+
+az container list --resource-group $rgName --query "[].{Id:id,containers[0].image}"
+az resource list --resource-group $rgName --query "sort_by([].{name:name,Type:type,location:location},&Type)" --output table
+
+# --- Group deployment -------------------------
+az deployment group create \
+    --resource-group $rgName \
+    --template-file $file \
+    --parameters containerGroupName="Group2" \
+    --name 'Group2-deployment'
+
+
+# --- Tabula rasa resource group ---------------
+az deployment group create --name 'tabulaRasa' --resource-group $rgName --mode Complete --template-uri "https://raw.githubusercontent.com/www42/arm/master/templates/empty.json" --no-wait
+az deployment group list --resource-group $rgName --query "reverse(sort_by([].{Name:name,provisioningState:properties.provisioningState,timestamp:properties.timestamp}, &timestamp))" --output table
+
+# --- Delete resource group --------------------
+az group delete --resource-group $rgName --yes --no-wait
+
+# --- Create resource group --------------------
+az group create --location $location --name $rgName
+az group list --output table
+
+# --- VNet integration -------------------------
+# First container group
+az container create \
+  --name appcontainer \
+  --resource-group $rgName \
+  --image mcr.microsoft.com/azuredocs/aci-helloworld \
+  --vnet aci-vnet \
+  --vnet-address-prefix 10.0.0.0/16 \
+  --subnet aci-subnet \
+  --subnet-address-prefix 10.0.0.0/24
+
+# Second container group
+az container create \
+    --name appcontainer2 \
+    --resource-group $rgName \
+    --image mcr.microsoft.com/azuredocs/aci-helloworld \
+    --vnet aci-vnet \
+    --subnet aci-subnet
+
+# Third container group
+CONTAINER_GROUP_IP=$(az container show \
+    --resource-group $rgName \
+    --name appcontainer \
+    --query ipAddress.ip --output tsv)
+
+az container create \
+  --resource-group $rgName \
+  --name commchecker \
+  --image alpine:3.5 \
+  --command-line "wget $CONTAINER_GROUP_IP" \
+  --restart-policy never \
+  --vnet aci-vnet \
+  --subnet aci-subnet
+
+az container logs --resource-group $rgName --name commchecker
+
+az network profile list --resource-group $rgName --query "[].id"
+
+# vnet subnet id
+az network vnet list --resource-group $rgName
+az network vnet subnet show --resource-group $rgName --vnet-name vnet2 --name subnet0 --query id --output tsv
+
+az deployment group create --name networkProfileCreate --resource-group $rgName --template-file networkProfile.json
